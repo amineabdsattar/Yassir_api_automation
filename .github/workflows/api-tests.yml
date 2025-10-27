@@ -1,9 +1,8 @@
-name: Spotify API Tests
+name: API Tests
 
 on:
   push:
-    branches:
-      - main
+    branches: [main]
   pull_request:
 
 jobs:
@@ -11,15 +10,14 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      CLIENT_ID: ${{ secrets.CLIENT_ID }}
-      CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
+      BASE_URL: "https://api.spotify.com/v1"
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v3
 
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v4
         with:
           python-version: "3.11"
 
@@ -28,13 +26,12 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Run API tests
-        run: |
-          mkdir -p logs
-          pytest --html=logs/report.html --self-contained-html -v
+      - name: Create logs folder
+        run: mkdir -p logs
 
-      - name: Upload HTML report
-        uses: actions/upload-artifact@v4
-        with:
-          name: pytest-report
-          path: logs/report.html
+      - name: Run API tests
+        env:
+          CLIENT_ID: ${{ secrets.CLIENT_ID }}
+          CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
+        run: |
+          python -m pytest --html=logs/report.html --self-contained-html -v
