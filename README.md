@@ -5,6 +5,7 @@ This project automates testing of the **Spotify Web API** using Python and `pyte
 ---
 
 ## Project Structure
+```
 spotify_api_automation/
 ├─ src/
 │ ├─ api_client.py # Handles Spotify authentication and API requests
@@ -17,6 +18,7 @@ spotify_api_automation/
 ├─ requirements.txt # Python dependencies
 ├─ pytest.ini # Pytest configuration
 └─ README.md # This file
+```
 ---
 
 ## Setup
