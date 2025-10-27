@@ -9,9 +9,6 @@ jobs:
   test:
     runs-on: ubuntu-latest
 
-    env:
-      BASE_URL: "https://api.spotify.com/v1"
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -30,8 +27,4 @@ jobs:
         run: mkdir -p logs
 
       - name: Run API tests
-        env:
-          CLIENT_ID: ${{ secrets.CLIENT_ID }}
-          CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
-        run: |
-          python -m pytest --html=logs/report.html --self-contained-html -v
+        run: python -m pytest --html=logs/report.html --self-contained-html -v
